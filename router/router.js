@@ -35,6 +35,7 @@ router.get("/getConnect", (request, response) => {
 })
 
 router.get("/getAllCategories", (request, response) => {
+  response.setHeader('Access-Control-Allow-Origin', '*');
   var sql = `
     SELECT *
     FROM "categories"
@@ -62,6 +63,7 @@ router.get("/getCategoryByType", (request, response) => {
 });
 
 router.get("/getIngredientsByType", (request, response) => {
+  response.setHeader('Access-Control-Allow-Origin', '*');
   var sql = `
     SELECT *
     FROM "ingredients"
@@ -76,6 +78,7 @@ router.get("/getIngredientsByType", (request, response) => {
 });
 
 router.get("/getAllRecettes", (request, response) => {
+  response.setHeader('Access-Control-Allow-Origin', '*');
   var sql = `
     SELECT *
     FROM "recettes"
@@ -89,6 +92,7 @@ router.get("/getAllRecettes", (request, response) => {
 });
 
 router.get("/getRecetteByName", (request, response) => {
+  response.setHeader('Access-Control-Allow-Origin', '*');
   var sql = `
     SELECT *
     FROM "recettes"
@@ -128,7 +132,7 @@ router.get("/getRecettesByIngredients", (request, response) => {
     FROM "recettes_ingredients"
     where name_ingredient in ('` +
     ingredients.join("','") +
-    "')"; 
+    "')" + " and (" +"priorite = 3 or priorite = 2" +")";
    console.log(sql);     
   dbConnector.query(sql, (err, result) => {
     if (err) {
