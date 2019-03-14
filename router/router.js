@@ -18,7 +18,8 @@ router.get("/getAllRecipes", (request,response) => {
     })
 })
 
-router.get("/getConnect", (request, response) => {
+router.get("/user", (request, response) => {
+    response.setHeader('Access-Control-Allow-Origin', '*');
     var user = 'where username = ' + "'" + request.query.username + "'";
     var password = ' and password = ' + "'" + request.query.password + "'";
     var sql = `
@@ -32,6 +33,20 @@ router.get("/getConnect", (request, response) => {
       }
       response.status(200).send(result.rows)
     });
+})
+
+router.get("/users", (request, response) => {
+  response.setHeader('Access-Control-Allow-Origin', '*');
+  var sql = `
+    SELECT *
+    FROM "user"
+    `
+  dbConnector.query(sqlReq, (err, result) => {
+    if (err) {
+      response.status(500).send(err)
+    }
+    response.status(200).send(result.rows)
+  });
 })
 
 router.get("/getAllCategories", (request, response) => {
